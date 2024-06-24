@@ -301,7 +301,8 @@ elif nav_option == 'Water Quality':
             
             predictions_df = pd.DataFrame(predictions, columns=["Date", "pH", "pH Category", "Impact"])
             
-           for i, row in predictions_df.iterrows():
+            for i, row in predictions_df.iterrows():
+                
                 st.markdown(f"""
                 **Date:** {row['Date']}  
                 **pH:** {row['pH']}  
