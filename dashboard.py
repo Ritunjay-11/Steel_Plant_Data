@@ -192,52 +192,34 @@ if nav_option == 'Water Consumption':
     # Display selected site data and trend analysis
     st.subheader(f'{selected_site} Consumption')
     plot_consumption(filtered_data, f'{selected_site} Consumption', col_prefix)
-    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown(" ")
 
     # Display trend analysis for the selected site
     st.subheader(f'{selected_site} Consumption Trend')
     plot_trend(filtered_data, f'{selected_site} Consumption Trend', col_prefix)
-    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown(" ")
 
     # Display anomalies for the selected site
     st.subheader(f'Detected Anomalies in {selected_site}')
     anomalies, mean_value, threshold = detect_anomalies(filtered_data, col_prefix)
     st.write(anomalies)
-    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown(" ")
 
     # Add button to generate predictions
     if st.button('Generate Predictions'):
         predictions_df = generate_predictions(anomalies, selected_site, col_prefix, mean_value, threshold)
         st.subheader(f'Predictions for {selected_site}')
-        
-        # Use st.markdown to render HTML
+
+        # Display predictions in a markdown format
         for i, row in predictions_df.iterrows():
             st.markdown(f"""
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <td>{row['Date']}</td>
-                </tr>
-                <tr>
-                    <th>Consumption</th>
-                    <td>{row['Consumption']}</td>
-                </tr>
-                <tr>
-                    <th>Unusually High/Low</th>
-                    <td>{row['Unusually High/Low']}</td>
-                </tr>
-                <tr>
-                    <th>Causes</th>
-                    <td>{row['Causes']}</td>
-                </tr>
-                <tr>
-                    <th>Predictions</th>
-                    <td>{row['Predictions']}</td>
-                </tr>
-            </table>
-            <br>
-            """, unsafe_allow_html=True)
-
+            **Date:** {row['Date']}  
+            **Consumption:** {row['Consumption']}  
+            **Unusually High/Low:** {row['Unusually High/Low']}  
+            **Causes:** {row['Causes']}  
+            **Predictions:** {row['Predictions']}  
+            """)
+    
 elif nav_option == 'Water Quality':
     st.sidebar.header('Water Quality Options')
     quality_option = st.sidebar.selectbox('Select Water Quality Parameter', ['Scaling (LSI)', 'pH', 'TDS'])
@@ -319,28 +301,13 @@ elif nav_option == 'Water Quality':
             
             predictions_df = pd.DataFrame(predictions, columns=["Date", "pH", "pH Category", "Impact"])
             
-            for i, row in predictions_df.iterrows():
+           for i, row in predictions_df.iterrows():
                 st.markdown(f"""
-                <table>
-                    <tr>
-                        <th>Date</th>
-                        <td>{row['Date']}</td>
-                    </tr>
-                    <tr>
-                        <th>pH</th>
-                        <td>{row['pH']}</td>
-                    </tr>
-                    <tr>
-                        <th>pH Category</th>
-                        <td>{row['pH Category']}</td>
-                    </tr>
-                    <tr>
-                        <th>Impact</th>
-                        <td>{row['Impact'].replace('\n', '<br>')}</td>
-                    </tr>
-                </table>
-                <br>
-                """, unsafe_allow_html=True)
+                **Date:** {row['Date']}  
+                **pH:** {row['pH']}  
+                **pH Category:** {row['pH Category']}  
+                **Impact:** {row['Impact']}  
+                """)
 
 
 
